@@ -63,6 +63,18 @@ public class EmailService {
 
         mailSender.send(mimeMessage);
     }
+    public void sendPasswordResetEmail(String to, String resetLink) throws MessagingException {
+        var message = mailSender.createMimeMessage();
+        var helper = new MimeMessageHelper(message, true);
+
+        helper.setTo(to);
+        helper.setSubject("Password Reset Request");
+        helper.setText("<p>You have requested to reset your password.</p>"
+                + "<p>Click the link below to reset your password:</p>"
+                + "<p><a href=\"" + resetLink + "\">Reset Password</a></p>", true);
+
+        mailSender.send(message);
+    }
 }
 
 

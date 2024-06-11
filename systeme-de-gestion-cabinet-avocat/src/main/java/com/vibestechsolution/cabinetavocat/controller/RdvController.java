@@ -126,7 +126,7 @@ public class RdvController {
 
 
 
-    //acceptation et refus d'un rdv
+    //Acceptation et refus d'un rdv
 
     @PutMapping("/accept/{id}")
     public ResponseEntity<Rdv> acceptRdv(@PathVariable Long id) {

@@ -45,6 +45,9 @@ public class User implements UserDetails, Principal {
     private boolean accountLocked;
     private boolean enabled;
 
+
+    private String resetPasswordToken;
+
     @ManyToMany(fetch = FetchType.EAGER)
     private List<Role> roles = new ArrayList<>(); // Initialisation par défaut
 
@@ -179,5 +182,9 @@ public class User implements UserDetails, Principal {
 
     public void setLastModifiedDate(LocalDateTime lastModifiedDate) {
         this.lastModifiedDate = lastModifiedDate;
+    }
+
+    public void setResetPasswordToken(String resetPasswordToken) {
+        this.resetPasswordToken = resetPasswordToken;
     }
 }

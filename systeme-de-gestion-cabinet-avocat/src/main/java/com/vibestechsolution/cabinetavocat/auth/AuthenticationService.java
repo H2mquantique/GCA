@@ -23,6 +23,8 @@ import java.security.SecureRandom;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -38,6 +40,9 @@ public class AuthenticationService {
 
     @Value("${application.mailing.frontend.activation-url}")
     private String activationUrl;
+    @Value("${application.mailing.frontend.reset-password-url}")
+    private String resetPasswordUrl;
+
 
     public void register(RegistrationRequest request) throws MessagingException {
         var userRole = roleRepository.findByName("USER")
@@ -132,5 +137,30 @@ public class AuthenticationService {
         }
 
         return codeBuilder.toString();
+    }
+    public void sendPasswordResetToken(String email) throws MessagingException {
+        Optional<User> userOptional = userRepository.findByEmail(email);
+        if (userOptional.isPresent()) {
+            User user = userOptional.get();
+            String token = UUID.randomUUID().toString();
+            user.setResetPasswordToken(token);
+            userRepository.save(user);
+
+            String resetLink = resetPasswordUrl + "?token=" + token;
+            emailService.sendPasswordResetEmail(user.getEmail(), resetLink);
+        } else {
+            throw new UsernameNotFoundException("User not found with email: " + email);
+        }
+    }
+    public void resetPassword(String token, ResetPasswordRequest request) {
+        Optional<User> userOptional = userRepository.findByResetPasswordToken(token);
+        if (userOptional.isPresent()) {
+            User user = userOptional.get();
+            user.setPassword(passwordEncoder.encode(request.getNewPassword()));
+            user.setResetPasswordToken(null);
+            userRepository.save(user);
+        } else {
+            throw new RuntimeException("Invalid token");
+        }
     }
 }
