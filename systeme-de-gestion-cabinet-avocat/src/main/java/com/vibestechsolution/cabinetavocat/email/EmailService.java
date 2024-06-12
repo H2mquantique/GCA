@@ -53,7 +53,7 @@ public class EmailService {
         Context context = new Context();
         context.setVariables(properties);
 
-        helper.setFrom("contact@medmehdihamdi.com");
+        helper.setFrom("contact.vibestech@digitvibe.com");
         helper.setTo(to);
         helper.setSubject(subject);
 
@@ -67,6 +67,7 @@ public class EmailService {
         var message = mailSender.createMimeMessage();
         var helper = new MimeMessageHelper(message, true);
 
+        helper.setFrom("contact.vibestech@digit-vibe.com");
         helper.setTo(to);
         helper.setSubject("Password Reset Request");
         helper.setText("<p>You have requested to reset your password.</p>"
