@@ -32,6 +32,15 @@ public class DossierController {
                 .map(dossier -> ResponseEntity.ok().body(dossier))
                 .orElse(ResponseEntity.notFound().build());
     }
+    @GetMapping("/getBy/{clientId}")
+    public ResponseEntity<Dossier> getDossierByClientId(@PathVariable Long clientId) {
+        Dossier dossier = dossierRepository.getDossierByClientId(clientId);
+        if (dossier != null) {
+            return ResponseEntity.ok(dossier);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
 
     @PostMapping("/save")
     public Dossier saveDossier(@RequestBody Dossier d) {
