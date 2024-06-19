@@ -1,7 +1,6 @@
 package com.vibestechsolution.cabinetavocat.controller;
 
 import com.vibestechsolution.cabinetavocat.entity.Honoraire;
-import com.vibestechsolution.cabinetavocat.entity.Rdv;
 import com.vibestechsolution.cabinetavocat.repository.HonoraireRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -11,7 +10,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/honoraires")
-public class HonoraireControler {
+public class HonoraireController {
     @Autowired
     private HonoraireRepository honoraireRepository;
     @GetMapping("/getall")
