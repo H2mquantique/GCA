@@ -2,6 +2,7 @@ package com.vibestechsolution.cabinetavocat.controller;
 
 
 import com.vibestechsolution.cabinetavocat.entity.Admin;
+import com.vibestechsolution.cabinetavocat.entity.Affaire;
 import com.vibestechsolution.cabinetavocat.entity.Client;
 import com.vibestechsolution.cabinetavocat.repository.AdminRepository;
 import com.vibestechsolution.cabinetavocat.repository.ClientRepository;
@@ -26,6 +27,11 @@ public class ClientController {
         return clientRepository.findById(id)
                 .map(admin -> ResponseEntity.ok().body(admin))
                 .orElse(ResponseEntity.notFound().build()); }
+
+    @GetMapping("/{clientId}/affaires") //Liste des affaires d'un client. Accés direct
+    public List<Affaire> getAffairesByClientId(@PathVariable Long clientId) {
+        return clientRepository.findAffairesByClientId(clientId);
+    }
     @PostMapping("/save")
     public Client saveClient(@RequestBody Client c) {
 

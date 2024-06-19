@@ -1,6 +1,7 @@
 package com.vibestechsolution.cabinetavocat.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 
 import java.util.Set;
 
@@ -22,7 +23,7 @@ public class Affaire {
     private Admin admin;
 
     @ManyToOne
-    @JoinColumn(name = "dossier_id")
+    @JoinColumn(name = "dossier_id", nullable = true)
     private Dossier dossier;
 
 
