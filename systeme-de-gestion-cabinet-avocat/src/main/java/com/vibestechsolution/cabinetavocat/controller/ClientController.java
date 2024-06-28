@@ -4,6 +4,7 @@ package com.vibestechsolution.cabinetavocat.controller;
 import com.vibestechsolution.cabinetavocat.entity.Admin;
 import com.vibestechsolution.cabinetavocat.entity.Affaire;
 import com.vibestechsolution.cabinetavocat.entity.Client;
+import com.vibestechsolution.cabinetavocat.entity.Dossier;
 import com.vibestechsolution.cabinetavocat.repository.AdminRepository;
 import com.vibestechsolution.cabinetavocat.repository.ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,14 @@ public class ClientController {
     @GetMapping("/{clientId}/affaires") //Liste des affaires d'un client. Accés direct
     public List<Affaire> getAffairesByClientId(@PathVariable Long clientId) {
         return clientRepository.findAffairesByClientId(clientId);
+    }
+    @GetMapping("/{clientId}/dossier")
+    public ResponseEntity<Dossier> getDossierByClientId(@PathVariable Long clientId) {
+        Dossier dossier = clientRepository.findDossierByClientId(clientId);
+        if (dossier == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(dossier);
     }
     @PostMapping("/save")
     public Client saveClient(@RequestBody Client c) {
