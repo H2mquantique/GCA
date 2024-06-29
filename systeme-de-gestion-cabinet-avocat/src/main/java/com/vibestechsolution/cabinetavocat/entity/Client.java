@@ -1,5 +1,7 @@
 package com.vibestechsolution.cabinetavocat.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.vibestechsolution.cabinetavocat.user.User;
 import jakarta.persistence.*;
 
@@ -7,33 +9,32 @@ import java.util.Set;
 
 @Entity
 @Table(name = "clients")
-public class Client extends User  {
-
-
+@JsonIgnoreProperties(value = { "dossier", "rdvs", "honoraires" }, allowSetters = true)
+public class Client extends User {
 
     private String cin;
     private String adresse;
     private String telephone1;
     private String telephone2;
 
-    @OneToOne(mappedBy = "client")
+    @OneToOne(mappedBy = "client", fetch = FetchType.LAZY)
+    @JsonIgnore
     private Dossier dossier;
 
-    @OneToMany(mappedBy = "client")
+    @OneToMany(mappedBy = "client", fetch = FetchType.LAZY)
+    @JsonIgnore
     private Set<Rdv> rdvs;
-    @OneToMany(mappedBy = "client")
+
+    @OneToMany(mappedBy = "client", fetch = FetchType.LAZY)
+    @JsonIgnore
     private Set<Honoraire> honoraires;
 
-
     // Constructors
-
     public Client() {
         super();
     }
 
     // Getters and Setters
-
-
     public String getCin() {
         return cin;
     }
@@ -74,13 +75,19 @@ public class Client extends User  {
         this.dossier = dossier;
     }
 
-
-
     public Set<Rdv> getRdvs() {
         return rdvs;
     }
 
     public void setRdvs(Set<Rdv> rdvs) {
         this.rdvs = rdvs;
+    }
+
+    public Set<Honoraire> getHonoraires() {
+        return honoraires;
+    }
+
+    public void setHonoraires(Set<Honoraire> honoraires) {
+        this.honoraires = honoraires;
     }
 }

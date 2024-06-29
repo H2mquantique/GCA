@@ -1,10 +1,13 @@
 package com.vibestechsolution.cabinetavocat.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
+
 import java.util.Set;
 
 @Entity
 @Table(name = "dossiers")
+@JsonIgnoreProperties(value = { "client", "affaires" }, allowSetters = true)
 public class Dossier {
 
     @Id
@@ -14,11 +17,11 @@ public class Dossier {
     @Column(nullable = false, unique = true)
     private String numeroDossier;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "client_id", nullable = false)
     private Client client;
 
-    @OneToMany(mappedBy = "dossier")
+    @OneToMany(mappedBy = "dossier", fetch = FetchType.LAZY)
     private Set<Affaire> affaires;
 
     // Constructors

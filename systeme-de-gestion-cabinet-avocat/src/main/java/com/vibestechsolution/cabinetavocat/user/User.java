@@ -1,5 +1,6 @@
 package com.vibestechsolution.cabinetavocat.user;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.vibestechsolution.cabinetavocat.role.Role;
 import jakarta.persistence.*;
 import lombok.*;
@@ -53,9 +54,11 @@ public class User implements UserDetails, Principal {
 
     @CreatedDate // automatically audited and keep tracking about modifications
     @Column(nullable = false,updatable = false)
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime createdDate;
     @LastModifiedBy // automatically audited and keep tracking about modifications
     @Column(insertable = false)// when we create a new record, we don't need to initialize the value of this attribute
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime lastModifiedDate;
 
     public User(String username, String lastname, String dateOfBirth, String email, String password, boolean accountLocked, boolean enabled, List<Role> roles, LocalDateTime now, Object o) {

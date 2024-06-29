@@ -12,6 +12,7 @@ import java.util.List;
 public interface ClientRepository extends JpaRepository<Client, Long> {
     @Query("SELECT a FROM Affaire a WHERE a.dossier.client.id = :clientId")
     List<Affaire> findAffairesByClientId(@Param("clientId") Long clientId);
+
     @Query("SELECT d FROM Dossier d JOIN d.client c WHERE c.id = :clientId")
     Dossier findDossierByClientId(@Param("clientId") Long clientId);
 }
