@@ -41,6 +41,7 @@ public class SecurityConfig {
                                         "/honoraires/**",
                                         "/services/**",
                                         "/delais/**",
+                                        "/reservations/**",
                                         "/intervenants/**",
                                         "/v2/api-docs",
                                         "/v3/api-docs",

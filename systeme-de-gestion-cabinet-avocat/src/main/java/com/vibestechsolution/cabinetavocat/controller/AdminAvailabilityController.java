@@ -20,14 +20,16 @@ public class AdminAvailabilityController {
     @Autowired
     private AdminRepository adminRepository;
 
-    @PostMapping("/create/{admin_id}")
-    public ResponseEntity<AdminAvailability> publishAvailability(@PathVariable Long admin_id, @RequestBody AdminAvailability adminAvailability) {
-        Admin admin = adminRepository.findById(admin_id)
+    @PostMapping("/create/{adminId}")
+    public ResponseEntity<AdminAvailability> createAvailability(@PathVariable Long adminId,
+                                                                @RequestBody AdminAvailability adminAvailability) {
+        Admin admin = adminRepository.findById(adminId)
                 .orElseThrow(() -> new RuntimeException("Admin not found"));
         adminAvailability.setAdmin(admin);
         AdminAvailability savedAvailability = adminAvailabilityRepository.save(adminAvailability);
         return ResponseEntity.ok(savedAvailability);
     }
+
 
     @GetMapping("/getall")
     public List<AdminAvailability> getAllDispo() {

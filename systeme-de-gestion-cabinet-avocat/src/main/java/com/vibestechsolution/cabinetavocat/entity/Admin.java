@@ -1,5 +1,6 @@
 package com.vibestechsolution.cabinetavocat.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.vibestechsolution.cabinetavocat.role.Role;
 import com.vibestechsolution.cabinetavocat.user.User;
 import jakarta.persistence.*;
@@ -12,6 +13,8 @@ import java.util.Set;
 
 @Entity
 @Table(name = "admins")
+@JsonIgnoreProperties(value = { "affaires", "rdvs", "delais","audiences", "availabilities"}, allowSetters = true)
+
 public class Admin extends User {
 
 

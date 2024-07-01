@@ -1,11 +1,14 @@
 package com.vibestechsolution.cabinetavocat.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
 @Entity
 @Table(name = "availabilities")
+@JsonIgnoreProperties(value = { "admin" }, allowSetters = true)
+
 public class AdminAvailability {
 
     @Id

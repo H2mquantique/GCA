@@ -1,5 +1,6 @@
 package com.vibestechsolution.cabinetavocat.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
@@ -7,6 +8,8 @@ import java.util.Set;
 
 @Entity
 @Table(name = "affaires")
+@JsonIgnoreProperties(value = { "admin", "dossier", "audiences","intervenantParAffaire" }, allowSetters = true)
+
 public class Affaire {
 
     @Id
