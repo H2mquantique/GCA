@@ -1,5 +1,7 @@
 package com.vibestechsolution.cabinetavocat.auth;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
@@ -18,6 +20,8 @@ public class RegistrationRequest {
     @NotEmpty(message="Lastname is mandatory")
     @NotBlank(message="Lastname is mandatory")
     private String lastname;
+    @JsonProperty("email")
+
     @Email(message="Email is not formatted")
     @NotEmpty(message="Email is mandatory")
     @NotBlank(message="Email is mandatory")
@@ -25,6 +29,24 @@ public class RegistrationRequest {
     @Size(min=8, message = "Password should be 8 characters long minimum")
     @NotEmpty(message="Password is mandatory")
     @NotBlank(message="Password is mandatory")
+    @JsonProperty("password")
     private String password;
+
+    public RegistrationRequest() {
+        // Constructeur par défaut nécessaire pour la désérialisation JSON
+    }
+
+    // Autres constructeurs, getters et setters
+
+    @JsonCreator
+    public RegistrationRequest(@JsonProperty("firstname") String firstname,
+                               @JsonProperty("lastname") String lastname,
+                               @JsonProperty("email") String email,
+                               @JsonProperty("password") String password) {
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.email = email;
+        this.password = password;
+    }
 
 }

@@ -1,4 +1,10 @@
 spring:
+  main:
+    allow-bean-definition-overriding: true
+
+  jackson:
+    deserialization:
+      fail-on-unknown-properties: false
   profiles:
     active: dev
   servlet:

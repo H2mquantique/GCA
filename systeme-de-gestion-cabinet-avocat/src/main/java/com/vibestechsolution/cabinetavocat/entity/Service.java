@@ -1,9 +1,11 @@
 package com.vibestechsolution.cabinetavocat.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
 @Entity
 @Table(name = "services")
+@JsonIgnoreProperties(value = { "client" }, allowSetters = true)
 public class Service {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -12,10 +14,11 @@ public class Service {
     @OneToOne
     @JoinColumn(name = "client_id", nullable = false)
     private Client client;
-    //Constructors
-    public Service(){}
-    public Service(String nom){
-        this.nom=nom;
+
+    public Service() {}
+
+    public Service(String nom) {
+        this.nom = nom;
     }
 
     public Long getId() {
