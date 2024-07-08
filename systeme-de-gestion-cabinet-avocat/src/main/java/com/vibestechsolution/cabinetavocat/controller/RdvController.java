@@ -127,6 +127,10 @@ public class RdvController {
 
 
     //Acceptation et refus d'un rdv
+    @GetMapping("/pending")
+    public List<Rdv> getPendingRdvs() {
+        return rdvRepository.findByStatus("PENDING");
+    }
 
     @PutMapping("/accept/{id}")
     public ResponseEntity<Rdv> acceptRdv(@PathVariable Long id) {

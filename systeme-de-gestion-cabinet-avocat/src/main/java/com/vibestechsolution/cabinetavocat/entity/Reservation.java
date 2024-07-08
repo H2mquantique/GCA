@@ -25,6 +25,8 @@ public class Reservation {
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
 
     private LocalDateTime reservationTime;
+    private String status = "pending"; // Ajout du champ status avec la valeur par défaut "pending"
+
 
     // Constructors, getters, and setters
     public Reservation() {}
@@ -65,5 +67,13 @@ public class Reservation {
 
     public void setReservationTime(LocalDateTime reservationTime) {
         this.reservationTime = reservationTime;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

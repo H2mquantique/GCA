@@ -12,7 +12,7 @@ public class Rdv{
 
     private String dateRDV;
     private String description;
-    private String status; // "PENDING", "ACCEPTED", "REJECTED"
+    private String status="PENDING"; // "PENDING", "ACCEPTED", "REJECTED"
 
 
     @ManyToOne

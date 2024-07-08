@@ -1,8 +1,10 @@
 package com.vibestechsolution.cabinetavocat.controller;
 
+import com.vibestechsolution.cabinetavocat.entity.Rdv;
 import com.vibestechsolution.cabinetavocat.entity.Reservation;
 import com.vibestechsolution.cabinetavocat.entity.Client;
 import com.vibestechsolution.cabinetavocat.entity.AdminAvailability;
+import com.vibestechsolution.cabinetavocat.repository.RdvRepository;
 import com.vibestechsolution.cabinetavocat.repository.ReservationRepository;
 import com.vibestechsolution.cabinetavocat.repository.ClientRepository;
 import com.vibestechsolution.cabinetavocat.repository.AdminAvailabilityRepository;
@@ -19,6 +21,8 @@ public class ReservationController {
 
     @Autowired
     private ReservationRepository reservationRepository;
+    @Autowired
+    private RdvRepository rdvRepository;
 
     @Autowired
     private ClientRepository clientRepository;
@@ -39,11 +43,24 @@ public class ReservationController {
         AdminAvailability availability = adminAvailabilityRepository.findById(availabilityId)
                 .orElseThrow(() -> new RuntimeException("Availability not found"));
 
+        // Setting default status to "pending"
+        reservationDetails.setStatus("pending");
         Reservation reservation = new Reservation(client, availability, reservationDetails.getReservationTime());
         Reservation savedReservation = reservationRepository.save(reservation);
 
+        // Create a corresponding RDV
+        Rdv rdv = new Rdv();
+        rdv.setDateRDV(reservation.getReservationTime().toString());
+        rdv.setDescription("Rendez-vous créé automatiquement pour la réservation");
+        rdv.setStatus("PENDING");
+        rdv.setClient(client);
+        rdv.setAdmin(availability.getAdmin());
+        rdv.setAvailability(availability);
+        rdvRepository.save(rdv);
+
         return ResponseEntity.ok(savedReservation);
     }
+
 
     // Récupérer toutes les réservations
     @GetMapping("/getall")
