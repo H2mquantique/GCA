@@ -3,6 +3,10 @@ package com.vibestechsolution.cabinetavocat.auth;
 
 import com.vibestechsolution.cabinetavocat.email.EmailService;
 import com.vibestechsolution.cabinetavocat.email.EmailTemplateName;
+import com.vibestechsolution.cabinetavocat.entity.Admin;
+import com.vibestechsolution.cabinetavocat.entity.Client;
+import com.vibestechsolution.cabinetavocat.repository.AdminRepository;
+import com.vibestechsolution.cabinetavocat.repository.ClientRepository;
 import com.vibestechsolution.cabinetavocat.role.RoleRepository;
 import com.vibestechsolution.cabinetavocat.security.JwtService;
 import com.vibestechsolution.cabinetavocat.user.Token;
@@ -37,6 +41,8 @@ public class AuthenticationService {
     private final RoleRepository roleRepository;
     private final EmailService emailService;
     private final TokenRepository tokenRepository;
+    private final ClientRepository clientRepository;
+    private final AdminRepository adminRepository;
 
     @Value("${application.mailing.frontend.activation-url}")
     private String activationUrl;
@@ -60,6 +66,26 @@ public class AuthenticationService {
         userRepository.save(user);
         sendValidationEmail(user);
     }
+    public void registerClient(Client client) throws MessagingException {
+        var clientRole = roleRepository.findByName("CLIENT")
+                .orElseThrow(() -> new IllegalStateException("ROLE CLIENT was not initiated"));
+        client.setRoles(List.of(clientRole));
+        client.setPassword(passwordEncoder.encode(client.getPassword()));
+        client.setEnabled(false);
+        clientRepository.save(client);
+        sendValidationEmail(client);
+    }
+
+    public void registerAdmin(Admin admin) throws MessagingException {
+        var adminRole = roleRepository.findByName("ADMIN")
+                .orElseThrow(() -> new IllegalStateException("ROLE ADMIN was not initiated"));
+        admin.setRoles(List.of(adminRole));
+        admin.setPassword(passwordEncoder.encode(admin.getPassword()));
+        admin.setEnabled(false);
+        adminRepository.save(admin);
+        sendValidationEmail(admin);
+    }
+
 
     public AuthenticationResponse authenticate(AuthenticationRequest request) {
         var auth = authenticationManager.authenticate(
