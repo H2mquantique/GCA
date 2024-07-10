@@ -9,12 +9,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/affaires")
 public class AffaireController {
     @Autowired
     private AffaireRepository affaireRepository;
+
     @GetMapping("/getall")
     public List<Affaire> getAllAffaires() {
         return affaireRepository.findAll();
@@ -23,14 +25,22 @@ public class AffaireController {
     @GetMapping("/get/{id}")
     public ResponseEntity<Affaire> getAffaireById(@PathVariable Long id) {
         return affaireRepository.findById(id)
-                .map(admin -> ResponseEntity.ok().body(admin))
+                .map(affaire -> ResponseEntity.ok().body(affaire))
                 .orElse(ResponseEntity.notFound().build());
     }
-    @PostMapping("/save")
-    public Affaire saveAffaire(@RequestBody Affaire a) {
 
-        return affaireRepository.save(a);
+    @GetMapping("/dossier/{dossierId}")
+    public List<Affaire> getAffairesByDossierId(@PathVariable Long dossierId) {
+        return affaireRepository.findAll().stream()
+                .filter(affaire -> affaire.getDossier().getId().equals(dossierId))
+                .collect(Collectors.toList());
     }
+
+    @PostMapping("/save")
+    public Affaire saveAffaire(@RequestBody Affaire affaire) {
+        return affaireRepository.save(affaire);
+    }
+
     @PutMapping("/update/{id}")
     public ResponseEntity<Affaire> updateAffaire(@PathVariable Long id, @RequestBody Affaire affaireDetails) {
         return affaireRepository.findById(id)
@@ -39,11 +49,11 @@ public class AffaireController {
                     affaire.setNatureAffaire(affaireDetails.getNatureAffaire());
                     affaire.setDateAudience(affaireDetails.getDateAudience());
                     affaire.setAboutissement(affaireDetails.getAboutissement());
-
                     Affaire updatedAffaire = affaireRepository.save(affaire);
                     return ResponseEntity.ok().body(updatedAffaire);
                 }).orElse(ResponseEntity.notFound().build());
     }
+
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<Object> deleteAffaire(@PathVariable Long id) {
         return affaireRepository.findById(id)
@@ -52,5 +62,7 @@ public class AffaireController {
                     return ResponseEntity.noContent().build();
                 }).orElse(ResponseEntity.notFound().build());
     }
-
 }
+
+
+

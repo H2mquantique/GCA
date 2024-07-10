@@ -13,10 +13,10 @@ import java.util.Set;
 
 @Entity
 @Table(name = "admins")
-@JsonIgnoreProperties(ignoreUnknown = true)
+@JsonIgnoreProperties(value = { "affaires", "rdvs", "delais","audiences", "availabilities","roles"}, allowSetters = true, ignoreUnknown = true)
 
 public class Admin extends User {
-    private String firstname;
+
 
 
     @OneToMany(mappedBy = "admin")
@@ -88,11 +88,4 @@ public class Admin extends User {
         this.availabilities = availabilities;
     }
 
-    public String getFirstname() {
-        return firstname;
-    }
-
-    public void setFirstname(String firstname) {
-        this.firstname = firstname;
-    }
 }

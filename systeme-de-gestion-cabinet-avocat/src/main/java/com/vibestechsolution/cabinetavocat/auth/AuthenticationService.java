@@ -55,7 +55,7 @@ public class AuthenticationService {
                 // todo - better exception handling
                 .orElseThrow(() -> new IllegalStateException("ROLE USER was not initiated"));
         var user = User.builder()
-                .username(request.getFirstname())
+                .username(request.getUsername())
                 .lastname(request.getLastname())
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
@@ -69,6 +69,7 @@ public class AuthenticationService {
     public void registerClient(Client client) throws MessagingException {
         var clientRole = roleRepository.findByName("CLIENT")
                 .orElseThrow(() -> new IllegalStateException("ROLE CLIENT was not initiated"));
+        client.setUsername(client.getUsername());
         client.setRoles(List.of(clientRole));
         client.setPassword(passwordEncoder.encode(client.getPassword()));
         client.setEnabled(false);
@@ -80,6 +81,7 @@ public class AuthenticationService {
         var adminRole = roleRepository.findByName("ADMIN")
                 .orElseThrow(() -> new IllegalStateException("ROLE ADMIN was not initiated"));
         admin.setRoles(List.of(adminRole));
+        admin.setUsername(admin.getUsername());
         admin.setPassword(passwordEncoder.encode(admin.getPassword()));
         admin.setEnabled(false);
         adminRepository.save(admin);
@@ -106,6 +108,7 @@ public class AuthenticationService {
                 .email(user.getEmail())
                 .username(user.getUsername())
                 .lastname(user.getLastname())
+                .role(user.getRoles().stream().findFirst().orElseThrow().getName())
                 .build();
     }
 

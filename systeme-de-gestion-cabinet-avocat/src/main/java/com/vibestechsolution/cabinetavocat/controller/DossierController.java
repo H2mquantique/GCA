@@ -52,6 +52,8 @@ public class DossierController {
         return dossierRepository.findById(id)
                 .map(dossier -> {
                     dossier.setNumeroDossier(dossierDetails.getNumeroDossier());
+                    dossier.setClient(dossierDetails.getClient());
+                    dossier.setAffaires(dossierDetails.getAffaires());
 
 
                     Dossier updatedDossier = dossierRepository.save(dossier);
@@ -66,7 +68,7 @@ public class DossierController {
                     return ResponseEntity.noContent().build();
                 }).orElse(ResponseEntity.notFound().build());
     }
-    @PostMapping("/save/{client_id}/{affaire_id}")
+   /* @PostMapping("/save/{client_id}/{affaire_id}")
     public ResponseEntity<Dossier> addDossier(@PathVariable Long client_id, @PathVariable Long affaire_id, @RequestBody Dossier dossier) {
 
         Client client = clientRepository.findById(client_id)
@@ -79,4 +81,5 @@ public class DossierController {
         Dossier savedDossier = dossierRepository.save(dossier);
         return ResponseEntity.ok(savedDossier);
     }
+  */
 }

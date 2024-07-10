@@ -9,11 +9,10 @@ import java.util.Set;
 
 @Entity
 @Table(name = "clients")
-@JsonIgnoreProperties(ignoreUnknown = true)
+@JsonIgnoreProperties(value = { "dossier", "rdvs", "honoraires","role" }, allowSetters = true, ignoreUnknown = true)
 
 public class Client extends User {
 
-    private String firstname;
 
 
     private String cin;
@@ -94,12 +93,6 @@ public class Client extends User {
     public void setHonoraires(Set<Honoraire> honoraires) {
         this.honoraires = honoraires;
     }
-    public String getFirstname() {
-        return firstname;
-    }
 
-    public void setFirstname(String firstname) {
-        this.firstname = firstname;
-    }
 
 }

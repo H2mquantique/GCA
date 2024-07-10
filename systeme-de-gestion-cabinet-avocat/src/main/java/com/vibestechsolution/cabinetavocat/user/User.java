@@ -104,4 +104,12 @@ public class User implements UserDetails, Principal {
     public String getFullName() {
         return username + " " + lastname;
     }
+
+    public List<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<Role> roles) {
+        this.roles = roles;
+    }
 }

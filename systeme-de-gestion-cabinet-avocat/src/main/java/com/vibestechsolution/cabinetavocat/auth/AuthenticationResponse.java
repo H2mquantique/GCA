@@ -11,6 +11,7 @@ public class AuthenticationResponse {
     private String token;
     private Long id;
     private String email;
-    private String username;
+    private String username = getUsername();
     private String lastname;
+    private String role;
 }

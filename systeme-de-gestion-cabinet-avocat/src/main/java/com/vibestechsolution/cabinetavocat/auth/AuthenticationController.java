@@ -25,8 +25,7 @@ public class AuthenticationController {
 
     @Autowired
     private AdminRepository adminRepository;
-    @Autowired
-    private AuthenticationService authService;
+
 
 
 
@@ -67,7 +66,7 @@ public class AuthenticationController {
     @PostMapping("/register/client")
     public ResponseEntity<Client> registerClient(@RequestBody Client client) {
         try {
-            authService.registerClient(client);
+            service.registerClient(client);
             return ResponseEntity.ok(client);
         } catch (MessagingException e) {
             e.printStackTrace();
@@ -78,7 +77,7 @@ public class AuthenticationController {
     @PostMapping("/register/admin")
     public ResponseEntity<Admin> registerAdmin(@RequestBody Admin admin) {
         try {
-            authService.registerAdmin(admin);
+            service.registerAdmin(admin);
             return ResponseEntity.ok(admin);
         } catch (MessagingException e) {
             e.printStackTrace();

@@ -16,7 +16,7 @@ import lombok.Setter;
 public class RegistrationRequest {
     @NotEmpty(message="Firstname is mandatory")
     @NotBlank(message="Firstname is mandatory")
-    private String firstname;
+    private String username;
     @NotEmpty(message="Lastname is mandatory")
     @NotBlank(message="Lastname is mandatory")
     private String lastname;
@@ -39,11 +39,11 @@ public class RegistrationRequest {
     // Autres constructeurs, getters et setters
 
     @JsonCreator
-    public RegistrationRequest(@JsonProperty("firstname") String firstname,
+    public RegistrationRequest(@JsonProperty("username") String username,
                                @JsonProperty("lastname") String lastname,
                                @JsonProperty("email") String email,
                                @JsonProperty("password") String password) {
-        this.firstname = firstname;
+        this.username = username;
         this.lastname = lastname;
         this.email = email;
         this.password = password;
