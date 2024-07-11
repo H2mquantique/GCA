@@ -32,6 +32,16 @@ public class AudienceController {
                 .map(admin -> ResponseEntity.ok().body(admin))
                 .orElse(ResponseEntity.notFound().build());
     }
+    @GetMapping("/byAffaire/{affaireId}")
+    public List<Audience> getAudiencesByAffaire(@PathVariable Long affaireId) {
+
+        return audienceRepository.findByAffaireId(affaireId);
+    }
+
+    @GetMapping("/byDate/{date}")
+    public List<Audience> getAudiencesByDate(@PathVariable String date) {
+        return audienceRepository.findByDateAudience(date);
+    }
     @PostMapping("/save")
     public ResponseEntity<?> saveAudience(@RequestBody Audience audience) {
         try {
