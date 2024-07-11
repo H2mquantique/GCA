@@ -1,6 +1,7 @@
 package com.vibestechsolution.cabinetavocat.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 @Entity
@@ -14,9 +15,13 @@ public class Audience {
     private String dateAudience;
     private String description;
 
+    @JsonIgnore
+
     @ManyToOne
     @JoinColumn(name = "admin_id", nullable = false)
     private Admin admin;
+
+    @JsonIgnore
 
     @ManyToOne
     @JoinColumn(name = "affaire_id",nullable = false)
