@@ -19,9 +19,10 @@ public class Client extends User {
     private String adresse;
     private String telephone1;
     private String telephone2;
+    private String statut= "non activé";
+
 
     @OneToOne(mappedBy = "client", fetch = FetchType.LAZY)
-    @JsonIgnore
     private Dossier dossier;
 
     @OneToMany(mappedBy = "client", fetch = FetchType.LAZY)
@@ -94,5 +95,12 @@ public class Client extends User {
         this.honoraires = honoraires;
     }
 
+    public String getStatut() {
+        return statut;
+    }
+
+    public void setStatut(String statut) {
+        this.statut = statut;
+    }
 
 }

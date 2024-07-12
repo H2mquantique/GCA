@@ -32,6 +32,8 @@ public class SecurityConfig  {
 
     private final JwtFilter jwtAuthFilter;
     private final AuthenticationProvider authenticationProvider;
+    private final UserDetailsService userDetailsService;
+
 
 
     @Bean
@@ -93,6 +95,7 @@ public class SecurityConfig  {
         source.registerCorsConfiguration("/**", config);
         return new CorsFilter(source);
     }
+
 
 
 

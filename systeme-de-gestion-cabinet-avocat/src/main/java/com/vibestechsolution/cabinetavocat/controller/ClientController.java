@@ -56,6 +56,7 @@ public class ClientController {
                     client.setAdresse(clientDetails.getAdresse());
                     client.setTelephone1(clientDetails.getTelephone1());
                     client.setTelephone2(clientDetails.getTelephone2());
+                    client.setStatut(clientDetails.getStatut());
 
 
 

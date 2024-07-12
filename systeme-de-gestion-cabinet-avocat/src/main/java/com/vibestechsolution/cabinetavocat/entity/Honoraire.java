@@ -9,8 +9,8 @@ public class Honoraire {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String nature_reglement;
-    private String tranche_paye;
-    private String reste;
+    private int tranche_paye;
+    private int reste;
     @ManyToOne
     @JoinColumn(name="client_id")
     private Client client;
@@ -35,19 +35,19 @@ public class Honoraire {
         this.nature_reglement = nature_reglement;
     }
 
-    public String getTranche_paye() {
+    public int getTranche_paye() {
         return tranche_paye;
     }
 
-    public void setTranche_paye(String tranche_paye) {
+    public void setTranche_paye(int tranche_paye) {
         this.tranche_paye = tranche_paye;
     }
 
-    public String getReste() {
+    public int getReste() {
         return reste;
     }
 
-    public void setReste(String reste) {
+    public void setReste(int reste) {
         this.reste = reste;
     }
 

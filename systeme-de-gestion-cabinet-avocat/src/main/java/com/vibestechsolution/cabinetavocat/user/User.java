@@ -1,8 +1,6 @@
 package com.vibestechsolution.cabinetavocat.user;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.*;
 import com.vibestechsolution.cabinetavocat.role.Role;
 import jakarta.persistence.*;
 import lombok.*;
@@ -30,6 +28,8 @@ import java.util.stream.Collectors;
 @EntityListeners(AuditingEntityListener.class) // to keep track who creates that
 @Inheritance(strategy = InheritanceType.JOINED)
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler","roles"})
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+
 public class User implements UserDetails, Principal {
 
     @Id

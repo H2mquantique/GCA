@@ -7,7 +7,6 @@ import java.util.Set;
 
 @Entity
 @Table(name = "dossiers")
-@JsonIgnoreProperties(value = { "client", "affaires" }, allowSetters = true)
 public class Dossier {
 
     @Id
@@ -17,8 +16,8 @@ public class Dossier {
     @Column(nullable = false, unique = true)
     private String numeroDossier;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "client_id", nullable = false)
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "client_id", referencedColumnName = "id")
     private Client client;
 
     @OneToMany(mappedBy = "dossier", fetch = FetchType.LAZY)
