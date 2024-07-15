@@ -58,6 +58,13 @@ public class User implements UserDetails, Principal {
     @Column(insertable = false)
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime lastModifiedDate;
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name = "user_authorities", joinColumns = @JoinColumn(name = "user_id"))
+    @Column(name = "authority")
+    @JsonIgnore // Si vous ne voulez pas inclure les autorités dans la sérialisation
+
+    private List<String> authorities;
+
 
     @Override
     public String getName() {
@@ -69,6 +76,9 @@ public class User implements UserDetails, Principal {
         return this.roles.stream()
                 .map(r -> new SimpleGrantedAuthority(r.getName()))
                 .collect(Collectors.toList());
+    }
+    public List<String> getAuthoritiesAsString() {
+        return authorities != null ? authorities : new ArrayList<>();
     }
 
     @Override
@@ -111,5 +121,10 @@ public class User implements UserDetails, Principal {
 
     public void setRoles(List<Role> roles) {
         this.roles = roles;
+    }
+
+    @JsonSetter
+    public void setAuthoritiesAsString(List<String> authoritiesAsString) {
+        this.authorities = authoritiesAsString;
     }
 }

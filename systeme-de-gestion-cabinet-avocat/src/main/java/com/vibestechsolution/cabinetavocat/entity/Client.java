@@ -5,22 +5,19 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.vibestechsolution.cabinetavocat.user.User;
 import jakarta.persistence.*;
 
+import java.util.List;
 import java.util.Set;
 
 @Entity
 @Table(name = "clients")
-@JsonIgnoreProperties(value = { "dossier", "rdvs", "honoraires","role" }, allowSetters = true, ignoreUnknown = true)
-
+@JsonIgnoreProperties(value = { "dossier", "rdvs", "honoraires", "role","authorities" }, allowSetters = true, ignoreUnknown = true)
 public class Client extends User {
-
-
 
     private String cin;
     private String adresse;
     private String telephone1;
     private String telephone2;
-    private String statut= "non activé";
-
+    private String statut = "non activé";
 
     @OneToOne(mappedBy = "client", fetch = FetchType.LAZY)
     private Dossier dossier;
@@ -32,6 +29,7 @@ public class Client extends User {
     @OneToMany(mappedBy = "client", fetch = FetchType.LAZY)
     @JsonIgnore
     private Set<Honoraire> honoraires;
+
 
     // Constructors
     public Client() {
@@ -102,5 +100,4 @@ public class Client extends User {
     public void setStatut(String statut) {
         this.statut = statut;
     }
-
 }
